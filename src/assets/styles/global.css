@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    @font-face {
+        font-family: Harry Potter;
+        src: url(/src/assets/fonts/HARRYP__.TTF);
+    }
+
+    @font-face {
+        font-family: Afterglow;
+        src: url(/src/assets/fonts/Afterglow-Regular.ttf);
+    }
+}
+
+html {
+    /* cursor: url("https://i.stack.imgur.com/wu8CP.png"), auto; */
+    scroll-behavior: smooth;
+}
+
+
+.element {
+    scroll-snap-align: start;
+}
+
+.element {
+    scroll-snap-align: end;
+}
+
+.element {
+    scroll-snap-align: center;
+}
+
+.element {
+    scroll-snap-align: none;
+}
