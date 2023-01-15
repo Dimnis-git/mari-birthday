@@ -1,7 +1,7 @@
-import { useEffect } from 'react';
+import { useState } from "react"
 import { useCopyToClipboard } from 'usehooks-ts'
 
-import AudioTheme from './assets/audio/HarryPotter-music-theme.mp3';
+import music from './assets/audio/music-theme.mp3';
 
 //Assets
 import HarryPotter from './assets/images/harry-potter-jumbotron.jpg';
@@ -19,25 +19,35 @@ import { BiCheckCircle, BiUpArrowCircle } from 'react-icons/bi';
 import { MdContentCopy } from 'react-icons/md';
 
 export default function App() {
+  const [init, setInit] = useState<boolean>(false);
   const [value, copy] = useCopyToClipboard();
 
-  useEffect(() => {
-    var audio = new Audio(AudioTheme)
-    audio.loop = true;
-    audio.play();
-  }, []);
+  let audio = new Audio(music)
 
   const scrollToView = (element : string) => document.getElementById(element)?.scrollIntoView({block: 'center'})
 
-  return (
-    <div className='snap-y snap-mandatory h-screen overflow-y-auto'>
-      <button
-        onClick={() => scrollToView('jumbotron1')}
-        className='z-10 absolute bottom-2 md:right-5 lg:right-5 max-sm:right-2 button-rounded from-teal-500 to-teal-700'>
-        <BiUpArrowCircle />
-      </button>
+  if (!init)
+    return (
+      <div className="flex justify-center h-screen items-center text-slate-300">
+        <div>
+          <h1 className="font-harry max-sm:text-7xl md:text-6xl lg:text-9xl">Mari 15 Anos</h1>
+          <div className="flex justify-center mt-5">
+            <button className="btn btn-primary btn-lg" onClick={() => { setInit(true); audio.play();}}>Começar ⚡</button>
+          </div>
+        </div>
+      </div>
+    )
+  else
+    return (
+      <div className='snap-y snap-mandatory h-screen overflow-y-auto text-slate-300'>
 
-      <div id='jumbotron1' className='hero min-h-screen snap-center' style={{ backgroundImage: `url('${HarryPotter}')` }}>
+        <button
+          onClick={() => scrollToView('jumbotron1')}
+          className='z-10 absolute bottom-2 md:right-5 lg:right-5 max-sm:right-2 button-rounded from-teal-500 to-teal-700'>
+          <BiUpArrowCircle />
+        </button>
+
+        <div id='jumbotron1' className='hero min-h-screen snap-center' style={{ backgroundImage: `url('${HarryPotter}')` }}>
         <div className='hero-overlay bg-opacity-70'></div>
         <div className='hero-content text-center'>
           <div className='flex flex-col gap-10'>
@@ -82,45 +92,45 @@ export default function App() {
             </footer>
           </div>
         </div>
-      </div>
+        </div>
 
-      <div id='jumbotron2' className='jumbotron snap-center' style={{ backgroundImage: `url('${Jumbotron2}')` }}>
-        <div className='hero-overlay bg-opacity-70'></div>
-        <div className='hero-content text-center'>
-          <div className='flex flex-col gap-10'>
-            <h1 className='title'>Presentes</h1>
-            <main>
-              <p className='sub-title 2xl:text-5xl mb-4'>Você pode começar a fazer magia desde já!</p>
-              <p className='sm:text-sm md:text-sm lg:text-2xl font-semibold'>Abrindo o app do seu banco de preferência, por meio de um PIX você pode garantir o presente da Mari 👑</p>
-              <div className="flex flex-col mt-4">
-                {!value
-                  ?
-                    <button className='btn bg-slate-600' onClick={() => copy('50657204870')}>
-                      COPIAR CHAVE PIX CPF
-                      <MdContentCopy className='ml-2'/>
-                    </button>
-                  :
-                    <button className='btn bg-green-700 hover:bg-green-700' onClick={() => copy('50657204870')}>
-                      COPIADO
-                      <BiCheckCircle className='ml-2'/>
-                    </button>
-                }
-                <div className=' max-sm:hidden  lg:visible'>
-                  <div className="divider font-semibold">OU</div>
-                  <div className='flex justify-center mb-10'>
-                    <img src={Qrcode} alt='QRCode' />
+        <div id='jumbotron2' className='jumbotron snap-center' style={{ backgroundImage: `url('${Jumbotron2}')` }}>
+          <div className='hero-overlay bg-opacity-70'></div>
+          <div className='hero-content text-center'>
+            <div className='flex flex-col gap-10'>
+              <h1 className='title'>Presentes</h1>
+              <main>
+                <p className='sub-title 2xl:text-5xl mb-4'>Você pode começar a fazer magia desde já!</p>
+                <p className='sm:text-sm md:text-sm lg:text-2xl font-semibold'>Abrindo o app do seu banco de preferência, por meio de um PIX você pode garantir o presente da Mari 👑</p>
+                <div className="flex flex-col mt-4">
+                  {!value
+                    ?
+                      <button className='btn bg-slate-600' onClick={() => copy('50657204870')}>
+                        COPIAR CHAVE PIX CPF
+                        <MdContentCopy className='ml-2'/>
+                      </button>
+                    :
+                      <button className='btn bg-green-700 hover:bg-green-700' onClick={() => copy('50657204870')}>
+                        COPIADO
+                        <BiCheckCircle className='ml-2'/>
+                      </button>
+                  }
+                  <div className=' max-sm:hidden  lg:visible'>
+                    <div className="divider font-semibold">OU</div>
+                    <div className='flex justify-center mb-10'>
+                      <img src={Qrcode} alt='QRCode' />
+                    </div>
                   </div>
                 </div>
-              </div>
-            </main>
-            <footer>
-              <p className='lg:text-2xl font-semibold'>Mas se você ainda preferir trazer seu presente no modo convencional, será muito bem recebido pela aniversariante 🤗</p>
-            </footer>
+              </main>
+              <footer>
+                <p className='lg:text-2xl font-semibold'>Mas se você ainda preferir trazer seu presente no modo convencional, será muito bem recebido pela aniversariante 🤗</p>
+              </footer>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div id='jumbotron3' className='jumbotron snap-center' style={{ backgroundImage: `url('${Jumbotron3}')` }}>
+        <div id='jumbotron3' className='jumbotron snap-center' style={{ backgroundImage: `url('${Jumbotron3}')` }}>
         <div className='hero-overlay bg-opacity-70'></div>
         <div className='hero-content text-center'>
           <div className='flex flex-col gap-10'>
@@ -139,9 +149,9 @@ export default function App() {
             </footer>
           </div>
         </div>
-      </div>
+        </div>
 
-      <div id='jumbotron4' className='jumbotron snap-center' style={{ backgroundImage: `url('${Jumbotron4}')` }}>
+        <div id='jumbotron4' className='jumbotron snap-center' style={{ backgroundImage: `url('${Jumbotron4}')` }}>
         <div className='hero-overlay bg-opacity-70'></div>
         <div className='hero-content text-center'>
           <div className='flex flex-col gap-10'>
@@ -155,9 +165,9 @@ export default function App() {
             </footer>
           </div>
         </div>
-      </div>
+        </div>
 
-      <div id='jumbotron5' className='jumbotron snap-center' style={{ backgroundImage: `url('${Jumbotron5}')` }}>
+        <div id='jumbotron5' className='jumbotron snap-center' style={{ backgroundImage: `url('${Jumbotron5}')` }}>
         <div className='hero-overlay bg-opacity-70'></div>
         <div className='hero-content text-center'>
           <div className='flex flex-col gap-10'>
@@ -167,8 +177,8 @@ export default function App() {
             </main>
           </div>
         </div>
-      </div>
+        </div>
 
-    </div>
-  )
+      </div>
+    )
 }
